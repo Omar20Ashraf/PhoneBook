@@ -3,9 +3,9 @@
 </template>
 
 <script>
+    
 export default {
-    mounted() {
-        console.log("Mounted!");
-    }
+    name:'appHeader',
 };
+
 </script>

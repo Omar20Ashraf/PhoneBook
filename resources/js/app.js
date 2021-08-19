@@ -9,7 +9,8 @@ Vue.use(VueRouter)
 window.Vue = Vue
 
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('appheader', require('./components/AppHeaderComponent.vue').default);
+Vue.component('appfooter', require('./components/AppFooterComponent.vue').default);
 
 
 const app = new Vue({
