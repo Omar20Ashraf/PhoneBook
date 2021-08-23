@@ -23,7 +23,7 @@ let routes = [{
 ]
 
 const router = new VueRouter({
-    mode:'history',//remove the # from the url
+    // mode:'history',//remove the # from the url
 
     routes // short for `routes: routes`
 })

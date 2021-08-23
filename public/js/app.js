@@ -1979,14 +1979,61 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'CreateComponent',
   data: function data() {
-    return {};
+    return {
+      list: {
+        name: '',
+        phone: '',
+        email: ''
+      },
+      errors: {}
+    };
   },
   methods: {
     closeModel: function closeModel() {
       this.$emit('closeModelRequest');
+    },
+    store: function store() {
+      var _this = this;
+
+      axios.post('/phoneBook', this.$data.list).then(function (response) {
+        _this.closeModel();
+
+        _this.list = {};
+        _this.errors = {};
+      })["catch"](function (error) {
+        _this.errors = error.response.data.errors;
+      });
     }
   },
   props: ['openModel']
@@ -2104,8 +2151,7 @@ var routes = [{
   component: __webpack_require__(/*! ./components/AboutComponent.vue */ "./resources/js/components/AboutComponent.vue").default
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__.default({
-  mode: 'history',
-  //remove the # from the url
+  // mode:'history',//remove the # from the url
   routes: routes // short for `routes: routes`
 
 });
@@ -20168,12 +20214,113 @@ var render = function() {
           })
         ]),
         _vm._v(" "),
-        _c("section", { staticClass: "modal-card-body" }),
+        _c("section", { staticClass: "modal-card-body" }, [
+          _c("div", { staticClass: "field" }, [
+            _c("div", { staticClass: "control" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.list.name,
+                    expression: "list.name"
+                  }
+                ],
+                staticClass: "input",
+                class: { "is-danger": _vm.errors.name },
+                attrs: { name: "name", type: "text", placeholder: "Name" },
+                domProps: { value: _vm.list.name },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.list, "name", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _vm.errors.name
+              ? _c("small", { staticClass: "has-text-danger" }, [
+                  _vm._v(_vm._s(_vm.errors.name[0]))
+                ])
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "field" }, [
+            _c("div", { staticClass: "control" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.list.email,
+                    expression: "list.email"
+                  }
+                ],
+                staticClass: "input",
+                class: { "is-danger": _vm.errors.email },
+                attrs: { name: "email", type: "email", placeholder: "Email" },
+                domProps: { value: _vm.list.email },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.list, "email", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _vm.errors.email
+              ? _c("small", { staticClass: "has-text-danger" }, [
+                  _vm._v(_vm._s(_vm.errors.email[0]))
+                ])
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "field" }, [
+            _c("div", { staticClass: "control" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.list.phone,
+                    expression: "list.phone"
+                  }
+                ],
+                staticClass: "input",
+                class: { "is-danger": _vm.errors.phone },
+                attrs: { name: "phone", type: "text", placeholder: "Phone" },
+                domProps: { value: _vm.list.phone },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.list, "phone", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _vm.errors.phone
+              ? _c("small", { staticClass: "has-text-danger" }, [
+                  _vm._v(_vm._s(_vm.errors.phone[0]))
+                ])
+              : _vm._e()
+          ])
+        ]),
         _vm._v(" "),
         _c("footer", { staticClass: "modal-card-foot" }, [
-          _c("button", { staticClass: "button is-success" }, [
-            _vm._v("Save changes")
-          ]),
+          _c(
+            "button",
+            { staticClass: "button is-success", on: { click: _vm.store } },
+            [_vm._v("Save changes")]
+          ),
           _vm._v(" "),
           _c(
             "button",
