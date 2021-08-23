@@ -32,7 +32,7 @@
 		    </span>
 
 		    <span class="panel-icon column is-1">
-		      <i class="has-text-info fa fa-edit" aria-hidden="true"></i>
+		      <i class="has-text-info fa fa-edit" aria-hidden="true" @click="editData(key)"></i>
 		    </span>
 
 		    <span class="panel-icon column is-1">
@@ -44,6 +44,8 @@
 		<create :openModel='addActive' @closeModelRequest="closeModel"></create>
 
 		<show :openModel='showActive' @closeModelRequest="closeModel"></show>
+
+		<edit :openModel='edtiActive' @closeModelRequest="closeModel"></edit>
 	
 	</div>
 </template>
@@ -52,6 +54,7 @@
 
 	import Create from "./CreateComponent.vue";
 	import show from "./ShowComponent.vue";
+	import edit from "./EditComponent.vue";
 	
 	export default {
 		
@@ -59,6 +62,7 @@
 	    return {
 	    	addActive:'',
 	    	showActive:'',
+	    	edtiActive:'',
 	    	lists:{},
 	    	errors:{},
 
@@ -71,7 +75,7 @@
 	  	},
 
 	  	closeModel(){
-	  		this.addActive = this.showActive =  ''
+	  		this.addActive = this.showActive = this.edtiActive =   ''
 	  	},
 
 	  	getData(){
@@ -85,10 +89,15 @@
 	  		this.$children[1].list = this.lists[key]
 
 	  		this.showActive  = 'is-active'
+	  	},
+
+	  	editData(key){
+	  		this.$children[2].list = this.lists[key]
+	  		this.edtiActive  = 'is-active'
 	  	}
 
 	  },
-	  components: {Create,show},
+	  components: {Create,show,edit},
 
 	  mounted(){
 	  	this.getData();

@@ -71,9 +71,10 @@ class PhoneBookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PhoneBookRequest $request, PhoneBook $phoneBook)
     {
         //
+        $phoneBook->update($request->all());
     }
 
     /**

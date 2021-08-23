@@ -24,12 +24,28 @@ class PhoneBookRequest extends FormRequest
      * @return array
      */
     public function rules()
-    {
-        return [
+    {   
+        $rules =  [
             //
             'name' => 'required|string|max:225',
-            'phone' => 'required|string|max:225',
-            'email' => ['required','email',Rule::unique(PhoneBook::class)],
+            'phone' => 'required|string|max:225'
         ];
+
+        if($this->getMethod() == 'POST'){
+
+            $rules +=[
+
+                'email' => ['required','email',Rule::unique(PhoneBook::class)],
+            ];
+        }else{
+
+            $rules +=[
+                
+                'email' => ['required','email',Rule::unique(PhoneBook::class)->ignore(request('id'))],
+            ];
+
+        }
+
+        return $rules;
     }
 }
