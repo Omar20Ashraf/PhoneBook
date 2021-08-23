@@ -28,7 +28,7 @@
 
 
 		    <span class="panel-icon column is-1">
-		      <i class="has-text-danger fa fa-trash" aria-hidden="true"></i>
+		      <i class="has-text-danger fa fa-trash" aria-hidden="true" @click="deleteList(key,list.id)"></i>
 		    </span>
 
 		    <span class="panel-icon column is-1">
@@ -94,6 +94,19 @@
 	  	editData(key){
 	  		this.$children[2].list = this.lists[key]
 	  		this.edtiActive  = 'is-active'
+	  	},
+
+	  	deleteList(key,id){
+
+	  		if(confirm("Are You Sure?")){
+
+		  		axios.delete(`/phoneBook/${id}`).then((response) => {
+
+		  			this.lists.splice(key,1) 
+
+		  		}).catch((error) => this.errors=error.response.data.errors)
+	  		}
+
 	  	}
 
 	  },

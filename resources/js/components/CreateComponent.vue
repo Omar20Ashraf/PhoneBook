@@ -73,7 +73,21 @@ export default {
   			
   			this.closeModel()
 
+  			this.$parent.lists.push(response.data)
+
+  			//sort the lists
+  			this.$parent.lists.sort(function(a,b){
+
+  				if(a.name > b.name){
+  					return 1;
+  				}else if(a.name < b.name){
+  					return -1;
+  				}
+  				
+  			})
+
   			this.list = {}
+
   			this.errors = {}
 
   		}).catch((error) => {

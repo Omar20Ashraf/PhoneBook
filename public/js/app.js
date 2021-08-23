@@ -2029,6 +2029,17 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('/phoneBook', this.$data.list).then(function (response) {
         _this.closeModel();
 
+        _this.$parent.lists.push(response.data); //sort the lists
+
+
+        _this.$parent.lists.sort(function (a, b) {
+          if (a.name > b.name) {
+            return 1;
+          } else if (a.name < b.name) {
+            return -1;
+          }
+        });
+
         _this.list = {};
         _this.errors = {};
       })["catch"](function (error) {
@@ -2234,6 +2245,17 @@ __webpack_require__.r(__webpack_exports__);
     editData: function editData(key) {
       this.$children[2].list = this.lists[key];
       this.edtiActive = 'is-active';
+    },
+    deleteList: function deleteList(key, id) {
+      var _this2 = this;
+
+      if (confirm("Are You Sure?")) {
+        axios["delete"]("/phoneBook/".concat(id)).then(function (response) {
+          _this2.lists.splice(key, 1);
+        })["catch"](function (error) {
+          return _this2.errors = error.response.data.errors;
+        });
+      }
     }
   },
   components: {
@@ -20874,7 +20896,17 @@ var render = function() {
                 _vm._v(_vm._s(list.name))
               ]),
               _vm._v(" "),
-              _vm._m(1, true),
+              _c("span", { staticClass: "panel-icon column is-1" }, [
+                _c("i", {
+                  staticClass: "has-text-danger fa fa-trash",
+                  attrs: { "aria-hidden": "true" },
+                  on: {
+                    click: function($event) {
+                      return _vm.deleteList(key, list.id)
+                    }
+                  }
+                })
+              ]),
               _vm._v(" "),
               _c("span", { staticClass: "panel-icon column is-1" }, [
                 _c("i", {
@@ -20942,17 +20974,6 @@ var staticRenderFns = [
           })
         ])
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "panel-icon column is-1" }, [
-      _c("i", {
-        staticClass: "has-text-danger fa fa-trash",
-        attrs: { "aria-hidden": "true" }
-      })
     ])
   }
 ]

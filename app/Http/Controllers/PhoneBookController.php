@@ -39,7 +39,7 @@ class PhoneBookController extends Controller
     public function store(PhoneBookRequest $request)
     {
         //
-        PhoneBook::create($request->all());
+        return PhoneBook::create($request->all());
     }
 
     /**
@@ -83,9 +83,10 @@ class PhoneBookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(PhoneBook $phoneBook)
     {
         //
+        $phoneBook->delete();
     }
 
     public function getData()
