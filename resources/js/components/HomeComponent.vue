@@ -6,7 +6,7 @@
 		  <p class="panel-heading">
 		    PhoneBook
 
-		    <button class="button is-primary is-outlined" @click="openModel">
+		    <button class="button is-primary is-outlined" @click="create">
 		      Add New
 		    </button>
 		  </p>
@@ -22,12 +22,9 @@
 		  </div>
 
 
-		  <a class="panel-block">
+		  <a class="panel-block" v-for="list,key in lists">
 			
-			<span class="column is-9">
-				
-		    	bulma
-			</span> 
+			<span class="column is-9">{{list.name}}</span>
 
 
 		    <span class="panel-icon column is-1">
@@ -39,36 +36,62 @@
 		    </span>
 
 		    <span class="panel-icon column is-1">
-		      <i class="has-text-primary fa fa-eye" aria-hidden="true"></i>
+		      <i class="has-text-primary fa fa-eye" aria-hidden="true" @click="showDetails(key)"></i>
 		    </span>
 		  </a>
 		</nav>
 
 		<create :openModel='addActive' @closeModelRequest="closeModel"></create>
+
+		<show :openModel='showActive' @closeModelRequest="closeModel"></show>
+	
 	</div>
 </template>
 
 <script>
 
 	import Create from "./CreateComponent.vue";
+	import show from "./ShowComponent.vue";
 	
 	export default {
 		
 	  data() {
 	    return {
-	    	addActive:''
+	    	addActive:'',
+	    	showActive:'',
+	    	lists:{},
+	    	errors:{},
+
 	    };
 	  },
 
 	  methods:{
-	  	openModel(){
+	  	create(){
 	  		this.addActive = 'is-active'
-	  	},	  	
-	  	closeModel(){
-	  		this.addActive = ''
 	  	},
 
+	  	closeModel(){
+	  		this.addActive = this.showActive =  ''
+	  	},
+
+	  	getData(){
+	  		axios.get('/getData').then((response) => {
+	  			this.lists = response.data
+	  		}).catch((error) => this.errors=error.response.data.errors)
+	  	},
+
+	  	showDetails(key){
+	  		
+	  		this.$children[1].list = this.lists[key]
+
+	  		this.showActive  = 'is-active'
+	  	}
+
 	  },
-	  components: {Create},
+	  components: {Create,show},
+
+	  mounted(){
+	  	this.getData();
+	  },
 	};
 </script>

@@ -15,3 +15,5 @@ Route::get('/phoneBook/{name}',function(){
 })->where('name','[A-Za-z]+');
 
 Route::resource('phoneBook','PhoneBookController');
+
+Route::get('getData','PhoneBookController@getData');
