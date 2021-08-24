@@ -3,9 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'PhoneBookController@index');
 
 
 //this to help the proplem when refresh on vue page it return error so user this route to redirect to the main page

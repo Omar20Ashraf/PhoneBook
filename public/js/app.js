@@ -1930,19 +1930,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
 
 /***/ }),
@@ -20486,9 +20473,7 @@ var render = function() {
               )
             ],
             1
-          ),
-          _vm._v(" "),
-          _vm._m(1)
+          )
         ]
       )
     ]
@@ -20529,24 +20514,6 @@ var staticRenderFns = [
           _c("span", { attrs: { "aria-hidden": "true" } })
         ]
       )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "navbar-end" }, [
-      _c("div", { staticClass: "navbar-item" }, [
-        _c("div", { staticClass: "buttons" }, [
-          _c("a", { staticClass: "button is-primary" }, [
-            _c("strong", [_vm._v("Sign up")])
-          ]),
-          _vm._v(" "),
-          _c("a", { staticClass: "button is-light" }, [
-            _vm._v("\r\n            Log in\r\n          ")
-          ])
-        ])
-      ])
     ])
   }
 ]
