@@ -2218,8 +2218,10 @@ __webpack_require__.r(__webpack_exports__);
       addActive: '',
       showActive: '',
       edtiActive: '',
+      searchQuery: '',
       lists: {},
-      errors: {}
+      errors: {},
+      temp: {}
     };
   },
   methods: {
@@ -2233,17 +2235,17 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.get('/getData').then(function (response) {
-        _this.lists = response.data;
+        _this.lists = _this.temp = response.data;
       })["catch"](function (error) {
         return _this.errors = error.response.data.errors;
       });
     },
     showDetails: function showDetails(key) {
-      this.$children[1].list = this.lists[key];
+      this.$children[1].list = this.temp[key];
       this.showActive = 'is-active';
     },
     editData: function editData(key) {
-      this.$children[2].list = this.lists[key];
+      this.$children[2].list = this.temp[key];
       this.edtiActive = 'is-active';
     },
     deleteList: function deleteList(key, id) {
@@ -2265,6 +2267,23 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.getData();
+  },
+  watch: {
+    searchQuery: function searchQuery() {
+      var _this3 = this;
+
+      if (this.searchQuery.length > 0) {
+        this.temp = this.lists.filter(function (list) {
+          return Object.keys(list).some(function (key) {
+            var string = String(list[key]); // console.log(string)
+
+            return string.toLowerCase().indexOf(_this3.searchQuery.toLowerCase()) > -1;
+          });
+        });
+      } else {
+        this.temp = this.lists;
+      }
+    }
   }
 });
 
@@ -20888,9 +20907,35 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _vm._m(0),
+          _c("div", { staticClass: "panel-block" }, [
+            _c("p", { staticClass: "control has-icons-left" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.searchQuery,
+                    expression: "searchQuery"
+                  }
+                ],
+                staticClass: "input",
+                attrs: { type: "text", placeholder: "Search" },
+                domProps: { value: _vm.searchQuery },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.searchQuery = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm._m(0)
+            ])
+          ]),
           _vm._v(" "),
-          _vm._l(_vm.lists, function(list, key) {
+          _vm._l(_vm.temp, function(list, key) {
             return _c("a", { staticClass: "panel-block" }, [
               _c("span", { staticClass: "column is-9" }, [
                 _vm._v(_vm._s(list.name))
@@ -20960,20 +21005,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "panel-block" }, [
-      _c("p", { staticClass: "control has-icons-left" }, [
-        _c("input", {
-          staticClass: "input",
-          attrs: { type: "text", placeholder: "Search" }
-        }),
-        _vm._v(" "),
-        _c("span", { staticClass: "icon is-left" }, [
-          _c("i", {
-            staticClass: "fas fa-search",
-            attrs: { "aria-hidden": "true" }
-          })
-        ])
-      ])
+    return _c("span", { staticClass: "icon is-left" }, [
+      _c("i", {
+        staticClass: "fas fa-search",
+        attrs: { "aria-hidden": "true" }
+      })
     ])
   }
 ]

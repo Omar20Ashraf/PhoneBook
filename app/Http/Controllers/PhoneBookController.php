@@ -93,7 +93,7 @@ class PhoneBookController extends Controller
     {
         // code...
 
-        $books = PhoneBook::orderBy('name','ASC')->get();
+        $books = PhoneBook::orderBy('name','ASC')->get(['id','name','email','phone']);
 
         return $books;
     }
